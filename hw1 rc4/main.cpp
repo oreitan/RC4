@@ -10,6 +10,7 @@
 #include <stdint.h>
 #include <fstream>
 #include "RC4.hpp"
+#include <time.h>
 
 using namespace std;
 int main(int argc, const char * argv[]) {
@@ -17,13 +18,14 @@ int main(int argc, const char * argv[]) {
     ofstream resFile;
     resFile.open("result.txt");
     int resarray[256]={0};
+    srand(time(NULL));
      __uint128_t key = rand();
     for (int c=0;c<100000;++c)
     {
         RC4 res(&key);
         res.PRGA();
         resarray[res.PRGA()]+=1;
-        ++key;
+        key = rand();
     }
     for (int p=0;p<255;++p)
         resFile<<resarray[p]<<"\n";
